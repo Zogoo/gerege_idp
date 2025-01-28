@@ -11,4 +11,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  mount RailsSamlIdp::Engine => "/saml_idp" # if you want to use the SAML IdP
 end
