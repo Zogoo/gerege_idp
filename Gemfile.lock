@@ -1,7 +1,7 @@
 PATH
-  remote: /Users/zogoo/ruby-workspace/rails_saml_idp
+  remote: /Users/zogoo/ruby-workspace/saml_idp_rails
   specs:
-    rails_saml_idp (0.1.0)
+    saml_idp_rails (0.1.0)
       rails (>= 8.0.1)
       saml_idp
 
@@ -425,12 +425,12 @@ DEPENDENCIES
   pg (~> 1.1)
   puma (>= 5.0)
   rails (~> 8.0.1)
-  rails_saml_idp!
   rspec-rails (~> 7.0.0)
   rubocop
   rubocop-rails
   rubocop-rails-omakase
   rubocop-rspec
+  saml_idp_rails!
   selenium-webdriver
   solid_cable
   solid_cache

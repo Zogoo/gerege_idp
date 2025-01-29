@@ -1,7 +1,7 @@
-# This migration comes from rails_saml_idp (originally 20250120165545)
-class CreateRailsSamlIdpSamlSpConfigs < ActiveRecord::Migration[8.0]
+# This migration comes from saml_idp_rails (originally 20250120165545)
+class CreateSamlIdpRailsSamlSpConfigs < ActiveRecord::Migration[8.0]
   def change
-    create_table :saml_sp_configs do |t|
+    create_table :saml_idp_rails_saml_sp_configs do |t|
       # For identification
       t.string :name
       t.string :display_name
@@ -57,7 +57,7 @@ class CreateRailsSamlIdpSamlSpConfigs < ActiveRecord::Migration[8.0]
       t.timestamps
     end
 
-    add_index :saml_sp_configs, :name, unique: true
-    add_index :saml_sp_configs, :entity_id, unique: true
+    add_index :saml_idp_rails_saml_sp_configs, :name, unique: true
+    add_index :saml_idp_rails_saml_sp_configs, :entity_id, unique: true
   end
 end

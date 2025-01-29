@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RailsSamlIdp.configure do |config|
+SamlIdpRails.configure do |config|
   config.base_url = "http://localhost:3000"
   config.sign_in_url = "/users/sign_in"
   config.relay_state_url = "/home"

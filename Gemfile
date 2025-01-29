@@ -16,7 +16,7 @@ gem "vite_rails"
 gem "jbuilder"
 
 # SAML IdP for Ruby on Rails
-gem "rails_saml_idp", path: "/Users/zogoo/ruby-workspace/rails_saml_idp"
+gem "saml_idp_rails", path: "/Users/zogoo/ruby-workspace/saml_idp_rails"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
