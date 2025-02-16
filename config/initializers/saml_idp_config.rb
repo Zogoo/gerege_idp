@@ -5,10 +5,10 @@ SamlIdpRails.configure do |config|
   config.sign_in_url = "/users/sign_in"
   config.relay_state_url = "/home"
   config.session_validation_hook = ->(session) { true }
-  config.saml_config_finder = lambda do
-    SamlSpConfig.find_by(uuid: params.require(:uuid))
+  config.saml_config_finder = lambda do |_request|
+    SamlIdpRails::SamlSpConfig.find_by(uuid: params.require(:uuid))
   end
-  config.saml_user_finder = lambda do
+  config.saml_user_finder = lambda do |_request|
     User = Struct.new(:name_id_attribute, :email, keyword_init: true)
     User.new(
       name_id_attribute: "email",
