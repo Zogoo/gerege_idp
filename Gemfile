@@ -16,7 +16,7 @@ gem "vite_rails"
 gem "jbuilder"
 
 # SAML IdP for Ruby on Rails
-gem "saml_idp_rails", path: "/Users/zogoo/ruby-workspace/saml_idp_rails"
+gem "saml_idp_rails"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
@@ -54,11 +54,11 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 
   # RSPEC for test
-  gem 'rspec-rails', '~> 7.0.0'
+  gem "rspec-rails", "~> 7.0.0"
   # Factory Bot for test
-  gem 'factory_bot_rails'
+  gem "factory_bot_rails"
   # Faker for test
-  gem 'faker'
+  gem "faker"
 end
 
 group :development do
@@ -66,14 +66,14 @@ group :development do
   gem "web-console"
 
   # Coding style check
-  gem 'rubocop', require: false
-  gem 'rubocop-rails'
-  gem 'rubocop-rspec'
+  gem "rubocop", require: false
+  gem "rubocop-rails"
+  gem "rubocop-rspec"
 end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
-  gem 'database_cleaner-active_record'
+  gem "database_cleaner-active_record"
 end
