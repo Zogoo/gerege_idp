@@ -1,25 +1,29 @@
-<h2>Change your password</h2>
+<%= render layout: "users/shared/auth_layout", locals: { title: "Change your password", subtitle: nil } do %>
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: "mt-8 space-y-6" }) do |f| %>
+    <%= render "users/shared/error_messages", resource: resource %>
+    <%= f.hidden_field :reset_password_token %>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "users/shared/error_messages", resource: resource %>
-  <%= f.hidden_field :reset_password_token %>
+    <div class="rounded-md shadow-sm -space-y-px">
+      <div>
+        <%= f.label :password, "New password", class: "sr-only" %>
+        <%= f.password_field :password, autofocus: true, autocomplete: "new-password",
+            class: "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm",
+            placeholder: "New password (#{@minimum_password_length} characters minimum)" %>
+      </div>
+      <div>
+        <%= f.label :password_confirmation, class: "sr-only" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password",
+            class: "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm",
+            placeholder: "Confirm new password" %>
+      </div>
+    </div>
 
-  <div class="field">
-    <%= f.label :password, "New password" %><br />
-    <% if @minimum_password_length %>
-      <em>(<%= @minimum_password_length %> characters minimum)</em><br />
-    <% end %>
-    <%= f.password_field :password, autofocus: true, autocomplete: "new-password" %>
-  </div>
+    <div>
+      <%= f.submit "Change my password", class: "group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+    </div>
+  <% end %>
 
-  <div class="field">
-    <%= f.label :password_confirmation, "Confirm new password" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Change my password" %>
+  <div class="mt-6 text-center text-sm">
+    <%= render "users/shared/links" %>
   </div>
 <% end %>
-
-<%= render "users/shared/links" %>
