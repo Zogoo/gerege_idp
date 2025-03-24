@@ -1,7 +1,10 @@
 FactoryBot.define do
   factory :user do
-    username { Faker::Internet.username }
+    # first_name { Faker::Name.first_name }
+    # last_name { Faker::Name.last_name }
     email { Faker::Internet.email }
-    password { Digest::SHA256.hexdigest("qwerty") }
+    password { 'password123' }
+    association :company
+    # Add other user attributes as needed
   end
 end

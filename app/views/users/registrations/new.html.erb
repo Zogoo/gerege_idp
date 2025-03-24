@@ -3,6 +3,7 @@
     <%= render "users/shared/error_messages", resource: resource %>
 
     <div class="rounded-md shadow-sm -space-y-px">
+      <%= f.hidden_field :company_id, value: resource.company_id %>
       <div>
         <%= f.label :email, class: "sr-only" %>
         <%= f.email_field :email, autofocus: true, autocomplete: "email",
