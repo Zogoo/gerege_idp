@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_29_125223) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_24_202016) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "companies", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.string "web"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "saml_idp_rails_saml_sp_configs", force: :cascade do |t|
     t.string "name"
@@ -40,37 +48,21 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_29_125223) do
     t.index ["name"], name: "index_saml_idp_rails_saml_sp_configs_on_name", unique: true
   end
 
-  create_table "saml_sp_configs", force: :cascade do |t|
-    t.string "name"
-    t.string "display_name"
-    t.string "entity_id"
-    t.string "signing_certificate"
-    t.string "encryption_certificate"
-    t.boolean "sign_assertions"
-    t.boolean "sign_authn_request"
-    t.string "certificate"
-    t.string "private_key"
-    t.string "pv_key_password"
-    t.string "relay_state"
-    t.string "name_id_attribute"
-    t.text "raw_metadata"
-    t.text "name_id_formats", default: [], array: true
-    t.jsonb "assertion_consumer_services", default: []
-    t.jsonb "single_logout_services", default: {}
-    t.jsonb "contact_person", default: {}
-    t.jsonb "saml_attributes", default: {}
-    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["entity_id"], name: "index_saml_sp_configs_on_entity_id", unique: true
-    t.index ["name"], name: "index_saml_sp_configs_on_name", unique: true
-  end
-
   create_table "users", force: :cascade do |t|
+    t.bigint "company_id", null: false
     t.string "username"
-    t.string "email"
     t.string "password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.index ["company_id"], name: "index_users_on_company_id"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "users", "companies"
 end
