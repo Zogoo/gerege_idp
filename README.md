@@ -1,24 +1,24 @@
 <h1 align="left">
   <a href="#">
-    <img src="https://github.com/yatish27/shore/assets/1014383/fbad8ed2-9510-4693-a342-4bafa515b164" width="128px"/>
+    <img src="https://github.com/yatish27/gerege-idp/assets/1014383/fbad8ed2-9510-4693-a342-4bafa515b164" width="128px"/>
   </a>
 
-Shore
+GeregeIdP
 
   <p align="left">
-    <a href="https://github.com/yatish27/shore/actions">
-      <img alt="Build Status" src="https://github.com/yatish27/shore/actions/workflows/ci.yml/badge.svg"/>
+    <a href="https://github.com/yatish27/gerege-idp/actions">
+      <img alt="Build Status" src="https://github.com/yatish27/gerege-idp/actions/workflows/ci.yml/badge.svg"/>
     </a>
-    <a href="https://github.com/yatish27/shore/blob/master/LICENSE.txt">
+    <a href="https://github.com/yatish27/gerege-idp/blob/master/LICENSE.txt">
       <img alt="License" src="https://img.shields.io/badge/license-MIT-428F7E.svg"/>
     </a>
-    <a href="https://codeclimate.com/github/yatish27/shore/maintainability"><img src="https://api.codeclimate.com/v1/badges/1cd4e3f1c0a4c5af29b1/maintainability" /></a>
+    <a href="https://codeclimate.com/github/yatish27/gerege-idp/maintainability"><img src="https://api.codeclimate.com/v1/badges/1cd4e3f1c0a4c5af29b1/maintainability" /></a>
   </p>
 </h1>
 
 ## Introduction
 
-Shore is a Ruby on Rails template with modern stack to start your new project.
+GeregeIdP is a Ruby on Rails template with modern stack to start your new project.
 
 ## Features
 
@@ -48,14 +48,14 @@ Refer [here](./docs/installing_prerequisites.md) to install these dependencies
 
 ### Initial setup
 
-- Shore is a preconfigured base Ruby on Rails application. You can clone this repository and add it to your repo.
+- GeregeIdP is a preconfigured base Ruby on Rails application. You can clone this repository and add it to your repo.
 
   ```bash
-  git clone git@github.com:yatish27/shore.git your_new_project_name
+  git clone git@github.com:yatish27/gerege-idp.git your_new_project_name
   cd your_new_project_name
   ```
 
-- The application's default name is Shore. You can rename it to your desired new name. The name should be in camelcase.
+- The application's default name is GeregeIdP. You can rename it to your desired new name. The name should be in camelcase.
 
   ```bash
   ./bin/rename_project YourNewProjectName
@@ -104,7 +104,7 @@ Running a single test
 
 ## License
 
-Shore is released under the [MIT License](./LICENSE.txt).
+GeregeIdP is released under the [MIT License](./LICENSE.txt).
 
 ## Contributing
 
