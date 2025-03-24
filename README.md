@@ -1,64 +1,111 @@
-# Gerege IdP
+<h1 align="left">
+  <a href="#">
+    <img src="https://github.com/yatish27/shore/assets/1014383/fbad8ed2-9510-4693-a342-4bafa515b164" width="128px"/>
+  </a>
 
-Gerege IdP is an open-source Identity Provider (IdP) project that supports modern Single Sign-On (SSO) protocols and various authentication methods, including fingerprint authentication and magic links.
+Shore
+
+  <p align="left">
+    <a href="https://github.com/yatish27/shore/actions">
+      <img alt="Build Status" src="https://github.com/yatish27/shore/actions/workflows/ci.yml/badge.svg"/>
+    </a>
+    <a href="https://github.com/yatish27/shore/blob/master/LICENSE.txt">
+      <img alt="License" src="https://img.shields.io/badge/license-MIT-428F7E.svg"/>
+    </a>
+    <a href="https://codeclimate.com/github/yatish27/shore/maintainability"><img src="https://api.codeclimate.com/v1/badges/1cd4e3f1c0a4c5af29b1/maintainability" /></a>
+  </p>
+</h1>
+
+## Introduction
+
+Shore is a Ruby on Rails template with modern stack to start your new project.
 
 ## Features
 
-- **SSO Protocols**: Supports popular SSO protocols such as OAuth2, OpenID Connect, and SAML.
-- **Fingerprint Authentication**: Allows users to authenticate using fingerprint recognition.
-- **Magic Links**: Provides a passwordless authentication method using magic links sent via email.
-- **Scalable**: Designed to handle a large number of authentication requests efficiently.
-- **Secure**: Implements best practices for security to protect user data and authentication processes.
+- **Ruby**: Ruby 3.4.2
+- **Rails**: [Rails 8](https://rubyonrails.org)
+- **PostgreSQL**: [PostgresSQL 17](https://www.postgresql.org)
+- **Tailwind CSS**: Uses [Tailwind CSS v4](https://tailwindcss.com) for styling.
+- **Vite Ruby**: Uses [Vite Ruby](https://vite-ruby.netlify.app) for asset management. It is based on [Vite.js](https://vitejs.dev). It replaces webpacker, jsbundling-rails, cssbundling-rails, importmaps and sprockets/propshaft.
+- **Node/npm**: Uses Node and npm.
+- **Solid Queue**: Uses [Solid Queue](https://github.com/rails/solid_queue) for background processing.
+- **Minitest/FactoryBot**: Uses Rails' default testing library, minitest along with [Factorybot](https://github.com/thoughtbot/factory_bot).
+- **Rubocop**: Auto-formats Ruby code with [rubocop](https://rubocop.org).
+- **Prettier**: Auto-formats JavaScript and CSS code with [prettier](https://prettier.io).
+- **Github Actions**: Uses Github Actions for continuous integration and deployment.
+- **Deployment**: Supports deployment on [Heroku](https://www.heroku.com/platform) and [Render](https://render.com)
 
 ## Getting Started
 
-### Prerequisites
+### System Requirements
 
-- **Ruby**: Install Ruby using a version manager like [rbenv](https://github.com/rbenv/rbenv).
-- **PostgreSQL**: Install PostgreSQL using [postgresapp.com](https://postgresapp.com) or Homebrew.
-- **Docker**: Ensure Docker is installed and running on your machine.
+You will need the following to run the application.
 
-### Installation
+- [**Ruby 3.4.2**](./docs/installing_prerequisites.md#ruby)
+- [**PostgreSQL 17**](./docs/installing_prerequisites.md#postgresql)
 
-1. Clone the repository:
-    ```sh
-    git clone https://github.com/yourusername/gerege-idp.git
-    cd gerege-idp
-    ```
+Refer [here](./docs/installing_prerequisites.md) to install these dependencies
 
-2. Install dependencies:
-    ```sh
-    bundle install
-    ```
+### Initial setup
 
-3. Set up the database:
-    ```sh
-    rails db:setup
-    ```
+- Shore is a preconfigured base Ruby on Rails application. You can clone this repository and add it to your repo.
 
-4. Start the application:
-    ```sh
-    rails server
-    ```
+  ```bash
+  git clone git@github.com:yatish27/shore.git your_new_project_name
+  cd your_new_project_name
+  ```
 
-### Configuration
+- The application's default name is Shore. You can rename it to your desired new name. The name should be in camelcase.
 
-Configure the application by editing the files in the [config](http://_vscodecontentref_/0) directory, such as [database.yml](http://_vscodecontentref_/1) and [puma.rb](http://_vscodecontentref_/2). Ensure you set the necessary environment variables for database connections and other settings.
+  ```bash
+  ./bin/rename_project YourNewProjectName
+  ```
 
-### Running Tests
+- Copy the `env.sample` to `.env`
 
-Run the test suite using:
-```sh
-rails test
+  - The default username and password for database is set to `postgres` and `postgres`. You can override them in `.env` file.
+
+- Run `bin/setup` to set up the application. It prepares the database and installs the required ruby gems and javascript packages. The script is idempotent, so you can run it multiple times.
+
+  ```bash
+  ./bin/setup
+  ```
+
+### Running the application
+
+Start your application
+
+```bash
+./bin/dev
 ```
 
-Contributing
-We welcome contributions to Gerege IdP! Please fork the repository and submit pull requests for any enhancements or bug fixes.
+This runs overmind or foreman using the Procfile.dev. It starts the rails server, solid queue background job process and vite server.
 
-License
-This project is open for non-profitable usage. Any other usage requires a license. See the LICENSE file for details.
+Visit [http://localhost:3000](http://localhost:3000) to see the home page 🚀.
 
-Contact
-For any questions or support, please open an issue on the GitHub repository or contact the maintainers.
+## Deployment
 
-Feel free to customize this README file further to suit your project's specific needs.
+- Heroku
+- Render
+
+## Testing
+
+Running all tests
+
+```
+./bin/rails test:all
+```
+
+Running a single test
+
+```
+./bin/rails test test/jobs/hello_world_job_test.rb
+```
+
+## License
+
+Shore is released under the [MIT License](./LICENSE.txt).
+
+## Contributing
+
+PRs are welcome
