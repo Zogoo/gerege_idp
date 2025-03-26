@@ -40,7 +40,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # protected
+  protected
+
+  def build_resource(hash = {})
+    self.resource = resource_class.new_with_session(hash, session)
+    self.resource.company = current_company
+  end
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params

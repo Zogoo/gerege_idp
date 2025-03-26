@@ -1,0 +1,14 @@
+default: &default
+  tenant_mode: single
+  tenant_type: null # path or subdomain
+  admin_tenant:
+    name: example
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default

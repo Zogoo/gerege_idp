@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
-  devise_scope :user do
-    root "users/sessions#new"
-  end
+  # Defines the root path route ("/")
+  root "home#show"
 
   # Devise routes
   devise_for :users, controllers: {
@@ -26,9 +25,6 @@ Rails.application.routes.draw do
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-
-  # Defines the root path route ("/")
-  # root "posts#index"
 
   mount SamlIdpRails::Engine, at: "/saml_idp" # if you want to use the SAML IdP
 end
