@@ -6,3 +6,6 @@ import { application } from "./application"
 
 import MenuController from "./menu_controller"
 application.register("menu", MenuController)
+
+import SettingsController from "./settings_controller"
+application.register("settings", SettingsController)

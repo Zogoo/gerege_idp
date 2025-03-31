@@ -1,0 +1,164 @@
+<div class="container mx-auto px-4 py-8" data-controller="settings">
+  <div class="flex gap-8">
+    <!-- Left Menu -->
+    <div class="w-64 flex-shrink-0">
+      <nav class="space-y-1">
+        <a href="#personal-access-tokens" 
+           class="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-900 hover:bg-gray-50"
+           data-settings-target="link"
+           data-action="click->settings#switch">
+          <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd" />
+          </svg>
+          Personal access tokens
+        </a>
+        <a href="#oauth-apps" 
+           class="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-900 hover:bg-gray-50"
+           data-settings-target="link"
+           data-action="click->settings#switch">
+          <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 0h8v12H6V4z" clip-rule="evenodd" />
+          </svg>
+          OAuth apps
+        </a>
+        <a href="#sessions" 
+           class="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-900 hover:bg-gray-50"
+           data-settings-target="link"
+           data-action="click->settings#switch">
+          <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+          </svg>
+          Sessions
+        </a>
+        <a href="#authentication" 
+           class="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-900 hover:bg-gray-50"
+           data-settings-target="link"
+           data-action="click->settings#switch">
+          <svg class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+          </svg>
+          Authentication
+        </a>
+      </nav>
+    </div>
+
+    <!-- Right Content Area -->
+    <div class="flex-1">
+      <!-- Personal Access Tokens Section -->
+      <div id="personal-access-tokens" 
+           class="space-y-6"
+           data-settings-target="section">
+        <div class="bg-white shadow sm:rounded-lg">
+          <div class="px-4 py-5 sm:p-6">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">Personal access tokens</h3>
+            <div class="mt-2 max-w-xl text-sm text-gray-500">
+              <p>Generate tokens to access the API on your behalf.</p>
+            </div>
+            <div class="mt-5">
+              <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Generate new token
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OAuth Apps Section -->
+      <div id="oauth-apps" 
+           class="space-y-6 hidden"
+           data-settings-target="section">
+        <div class="bg-white shadow sm:rounded-lg">
+          <div class="px-4 py-5 sm:p-6">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">OAuth applications</h3>
+            <div class="mt-2 max-w-xl text-sm text-gray-500">
+              <p>Manage your OAuth applications and their access to your account.</p>
+            </div>
+            <div class="mt-5">
+              <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Register new application
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sessions Section -->
+      <div id="sessions" 
+           class="space-y-6 hidden"
+           data-settings-target="section">
+        <div class="bg-white shadow sm:rounded-lg">
+          <div class="px-4 py-5 sm:p-6">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">Active sessions</h3>
+            <div class="mt-2 max-w-xl text-sm text-gray-500">
+              <p>Manage and revoke your active sessions across devices.</p>
+            </div>
+            <div class="mt-5">
+              <div class="space-y-4">
+                <!-- Current Session -->
+                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                  <div>
+                    <p class="font-medium">Current Session</p>
+                    <p class="text-sm text-gray-500">This device</p>
+                  </div>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    Active
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Authentication Section -->
+      <div id="authentication" 
+           class="space-y-6 hidden"
+           data-settings-target="section">
+        <!-- Password Section -->
+        <div class="bg-white shadow sm:rounded-lg">
+          <div class="px-4 py-5 sm:p-6">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">Password</h3>
+            <div class="mt-2 max-w-xl text-sm text-gray-500">
+              <p>Change your password to keep your account secure.</p>
+            </div>
+            <div class="mt-5">
+              <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Change password
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Passkeys Section -->
+        <div class="bg-white shadow sm:rounded-lg">
+          <div class="px-4 py-5 sm:p-6">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">Passkeys</h3>
+            <div class="mt-2 max-w-xl text-sm text-gray-500">
+              <p>Manage your passkeys for passwordless authentication.</p>
+            </div>
+            <div class="mt-5">
+              <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Add passkey
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Multi-factor Authentication Section -->
+        <div class="bg-white shadow sm:rounded-lg">
+          <div class="px-4 py-5 sm:p-6">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">Multi-factor authentication</h3>
+            <div class="mt-2 max-w-xl text-sm text-gray-500">
+              <p>Add an extra layer of security to your account.</p>
+            </div>
+            <div class="mt-5">
+              <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Set up 2FA
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
