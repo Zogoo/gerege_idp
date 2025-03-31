@@ -27,4 +27,8 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   mount SamlIdpRails::Engine, at: "/saml_idp" # if you want to use the SAML IdP
+
+  namespace :users do
+    get "my_page", to: "my_page#show"
+  end
 end

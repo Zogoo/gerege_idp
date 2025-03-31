@@ -19,6 +19,9 @@ puts "Creating companies..."
   FactoryBot.create(:company)
 end
 
+# Default tenant settings
+FactoryBot.create(:company, name: 'example')
+
 # Create users with associated companies
 puts "Creating users..."
 Company.all.each do |company|
