@@ -14,14 +14,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_06_215327) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
-  create_table "tenants", force: :cascade do |t|
-    t.string "name"
-    t.string "address"
-    t.string "web"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "oauth_access_grants", force: :cascade do |t|
     t.bigint "resource_owner_id", null: false
     t.bigint "application_id", null: false
@@ -100,6 +92,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_06_215327) do
     t.index ["name"], name: "index_saml_idp_rails_saml_sp_configs_on_name", unique: true
   end
 
+  create_table "tenants", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.string "web"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.bigint "tenant_id", null: false
     t.string "username"
@@ -111,9 +111,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_06_215327) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.index ["tenant_id"], name: "index_users_on_tenant_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["tenant_id"], name: "index_users_on_tenant_id"
   end
 
   create_table "users_roles", id: false, force: :cascade do |t|

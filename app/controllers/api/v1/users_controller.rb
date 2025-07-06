@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class Api::V1::UsersController < Api::V1::BaseController
   before_action :set_api_v1_user, only: %i[ show edit update destroy ]
 
   # GET /api/v1/users or /api/v1/users.json
