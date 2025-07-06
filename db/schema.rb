@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_06_215327) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_06_224819) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -98,6 +98,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_06_215327) do
     t.string "web"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "tenant_mode"
+    t.string "tenant_type"
   end
 
   create_table "users", force: :cascade do |t|

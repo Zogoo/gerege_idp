@@ -13,8 +13,8 @@ puts "Cleaning database..."
 Tenant.destroy_all
 User.destroy_all
 
-# Create companies
-puts "Creating companies..."
+# Create tenants
+puts "Creating tenants..."
 5.times do
   FactoryBot.create(:tenant)
 end
@@ -22,7 +22,7 @@ end
 # Default tenant settings
 FactoryBot.create(:tenant, name: 'example')
 
-# Create users with associated companies
+# Create users with associated tenants
 puts "Creating users..."
 Tenant.all.each do |tenant|
   # Create 3 users per tenant

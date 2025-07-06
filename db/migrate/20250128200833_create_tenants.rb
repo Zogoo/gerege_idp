@@ -4,6 +4,8 @@ class CreateTenants < ActiveRecord::Migration[8.0]
       t.string :name
       t.string :address
       t.string :web
+      t.string :tenant_mode
+      t.string :tenant_type
 
       t.timestamps
     end

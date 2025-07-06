@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Api::V1::Me", type: :request do
-  let(:tenant) { create(:tenant) }
+  let(:tenant) { create(:tenant, tenant_mode: :single ) }
   let(:user) { create(:user, tenant: tenant) }
   let(:application) { create(:doorkeeper_application) }
   let(:token) { create(:doorkeeper_access_token, application: application, resource_owner_id: user.id) }
