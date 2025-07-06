@@ -10,27 +10,27 @@
 
 # Clear existing data (optional)
 puts "Cleaning database..."
-Company.destroy_all
+Tenant.destroy_all
 User.destroy_all
 
 # Create companies
 puts "Creating companies..."
 5.times do
-  FactoryBot.create(:company)
+  FactoryBot.create(:tenant)
 end
 
 # Default tenant settings
-FactoryBot.create(:company, name: 'example')
+FactoryBot.create(:tenant, name: 'example')
 
 # Create users with associated companies
 puts "Creating users..."
-Company.all.each do |company|
-  # Create 3 users per company
+Tenant.all.each do |tenant|
+  # Create 3 users per tenant
   3.times do
-    FactoryBot.create(:user, company: company)
+    FactoryBot.create(:user, tenant: tenant)
   end
 end
 
 puts "Seed data created successfully!"
-puts "Created #{Company.count} companies"
+puts "Created #{Tenant.count} tenants"
 puts "Created #{User.count} users"

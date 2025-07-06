@@ -7,7 +7,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # GET /resource/sign_up
   def new
     super do |user|
-      user.company = current_company
+      user.tenant = current_tenant
     end
   end
 
@@ -44,7 +44,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def build_resource(hash = {})
     self.resource = resource_class.new_with_session(hash, session)
-    self.resource.company = current_company
+    self.resource.tenant = current_tenant
   end
 
   # If you have extra params to permit, append them to the sanitizer.

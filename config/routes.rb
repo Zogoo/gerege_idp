@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  use_doorkeeper
+
   # Defines the root path route ("/")
   root "home#show"
 

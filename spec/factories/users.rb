@@ -4,7 +4,7 @@ FactoryBot.define do
     # last_name { Faker::Name.last_name }
     email { Faker::Internet.email }
     password { 'password123' }
-    association :company
+    association :tenant
     # Add other user attributes as needed
   end
 end

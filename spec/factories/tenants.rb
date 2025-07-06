@@ -1,6 +1,6 @@
 FactoryBot.define do
-  factory :company do
-    name { Faker::Company.name }
+  factory :tenant do
+    name { Faker::Tenant.name }
     address { Faker::Address.full_address }
     web { "MyString" }
   end
