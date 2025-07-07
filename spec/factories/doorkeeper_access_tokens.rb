@@ -3,6 +3,6 @@ FactoryBot.define do
     application { create(:doorkeeper_application) }
     resource_owner_id { create(:user).id }
     expires_in { 1.hour }
-    scopes { '' }
+    scopes { 'read' }
   end
 end 

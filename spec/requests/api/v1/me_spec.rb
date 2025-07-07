@@ -5,11 +5,12 @@ RSpec.describe "Api::V1::Me", type: :request do
   let(:user) { create(:user, tenant: tenant) }
   let(:application) { create(:doorkeeper_application) }
   let(:token) { create(:doorkeeper_access_token, application: application, resource_owner_id: user.id) }
+  let(:headers) { { "Authorization" => "Bearer #{token.token}", "ACCEPT" => "application/json" } }
 
   describe "GET /api/v1/me" do
     context "with valid access token" do
       it "returns the current user as JSON" do
-        get "/api/v1/me", headers: { "Authorization" => "Bearer #{token.token}" }
+        get "/api/v1/me", headers: headers
         expect(response).to have_http_status(:success)
         expect(response.content_type).to include("application/json")
         json = JSON.parse(response.body)

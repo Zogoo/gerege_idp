@@ -2,9 +2,10 @@ require 'rails_helper'
 
 RSpec.describe "api/v1/users/index", type: :view do
   before(:each) do
+    tenant = FactoryBot.create(:tenant)
     assign(:api_v1_users, [
-      Api::V1::User.create!(),
-      Api::V1::User.create!()
+      create(:user),
+      create(:user)
     ])
   end
 

@@ -1,6 +1,6 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @api_v1_user %>
+<%= render partial: 'api/v1/users/user', locals: { user: @api_v1_user } %>
 
 <div>
   <%= link_to "Edit this user", edit_api_v1_user_path(@api_v1_user) %> |

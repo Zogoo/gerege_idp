@@ -5,10 +5,10 @@
 <h1>Users</h1>
 
 <div id="api_v1_users">
-  <% @api_v1_users.each do |api_v1_user| %>
-    <%= render api_v1_user %>
+  <% @api_v1_users.each do |user| %>
+    <%= render partial: 'api/v1/users/user', locals: { user: user } %>
     <p>
-      <%= link_to "Show this user", api_v1_user_path(api_v1_user) %>
+      <%= link_to "Show this user", api_v1_user_path(user) %>
     </p>
   <% end %>
 </div>
