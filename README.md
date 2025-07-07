@@ -73,6 +73,8 @@ Refer [here](./docs/installing_prerequisites.md) to install these dependencies
 
 ### Running the application
 
+#### Option 1: Local Development (Recommended)
+
 Start your application
 
 ```bash
@@ -80,6 +82,38 @@ Start your application
 ```
 
 This runs overmind or foreman using the Procfile.dev. It starts the rails server, solid queue background job process and vite server.
+
+Visit [http://localhost:3000](http://localhost:3000) to see the home page 🚀.
+
+#### Option 2: Docker Compose
+
+For containerized development environment, you can use Docker Compose:
+
+```bash
+# Start all services (database, redis, and Rails app)
+docker-compose up
+
+# Or run in background
+docker-compose up -d
+
+# To run with background job processor
+docker-compose --profile worker up
+
+# To stop all services
+docker-compose down
+
+# To rebuild containers after dependency changes
+docker-compose build
+
+# To view logs
+docker-compose logs -f web
+```
+
+The Docker Compose setup includes:
+- **PostgreSQL**: Latest Alpine version for the database
+- **Redis**: Latest Alpine version for caching and queues
+- **Rails App**: Development-optimized container with hot reloading
+- **Worker**: Background job processor (optional, use `--profile worker`)
 
 Visit [http://localhost:3000](http://localhost:3000) to see the home page 🚀.
 

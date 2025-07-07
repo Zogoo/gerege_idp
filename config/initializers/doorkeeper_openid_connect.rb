@@ -3,7 +3,7 @@
 Doorkeeper::OpenidConnect.configure do
   issuer 'http://localhost:3000'
 
-  signing_key Rails.application.credentials.secret_key_base
+  signing_key Rails.application.credentials.openid_connect&.signing_key || 'test_secret_key_for_openid_connect'
 
   subject_types_supported [:public]
 

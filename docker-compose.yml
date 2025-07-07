@@ -1,0 +1,116 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:alpine
+    container_name: gerege_idp_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: gerege_idp_development
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis for caching and queues
+  redis:
+    image: redis:alpine
+    container_name: gerege_idp_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Rails Application
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: gerege_idp_web
+    restart: unless-stopped
+    environment:
+      RAILS_ENV: development
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY:-80de8d296fe847687b30f2560e2c0aa8}
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/gerege_idp_development
+      REDIS_URL: redis://redis:6379/0
+      DB_HOST: db
+      RAILS_MAX_THREADS: 5
+      WEB_CONCURRENCY: 2
+      PORT: 3000
+      HOST: 0.0.0.0
+      # Development-specific settings
+      RAILS_SERVE_STATIC_FILES: true
+      RAILS_LOG_TO_STDOUT: true
+      RAILS_LOG_LEVEL: debug
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/rails
+      - bundle_cache:/usr/local/bundle
+      - node_modules_cache:/rails/node_modules
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: ["./bin/rails", "server", "-b", "0.0.0.0", "-p", "3000"]
+    stdin_open: true
+    tty: true
+
+  # Background job processor (if using Solid Queue)
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: gerege_idp_worker
+    restart: unless-stopped
+    environment:
+      RAILS_ENV: development
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY:-80de8d296fe847687b30f2560e2c0aa8}
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/gerege_idp_development
+      REDIS_URL: redis://redis:6379/0
+      DB_HOST: db
+      RAILS_MAX_THREADS: 5
+      RAILS_LOG_TO_STDOUT: true
+      RAILS_LOG_LEVEL: debug
+    volumes:
+      - .:/rails
+      - bundle_cache:/usr/local/bundle
+      - node_modules_cache:/rails/node_modules
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: ["./bin/rails", "solid_queue:start"]
+    profiles:
+      - worker
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  bundle_cache:
+    driver: local
+  node_modules_cache:
+    driver: local
+
+networks:
+  default:
+    name: gerege_idp_network 
