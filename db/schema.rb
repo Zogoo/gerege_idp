@@ -102,10 +102,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_07_223434) do
     t.string "name"
     t.string "address"
     t.string "web"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.string "tenant_mode"
     t.string "tenant_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
