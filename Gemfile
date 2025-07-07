@@ -21,6 +21,9 @@ gem "saml_idp_rails"
 # Password login
 gem "devise"
 
+# OAuth providers
+gem "omniauth-facebook"
+
 # Doorkeeper for OIDC
 gem "doorkeeper"
 gem "doorkeeper-openid_connect"

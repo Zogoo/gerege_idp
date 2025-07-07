@@ -1,3 +1,36 @@
+<%# User Profile Section %>
+<div class="bg-white shadow-sm border-b">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div class="flex items-center space-x-4">
+      <%# User Avatar %>
+      <div class="flex-shrink-0">
+        <% if current_user.image.present? %>
+          <%= image_tag current_user.image, class: "h-12 w-12 rounded-full", alt: "User avatar" %>
+        <% else %>
+          <div class="h-12 w-12 rounded-full bg-indigo-100 flex items-center justify-center">
+            <span class="text-lg text-indigo-600 font-semibold">
+              <%= current_user.name&.first&.upcase || current_user.email.first.upcase %>
+            </span>
+          </div>
+        <% end %>
+      </div>
+      
+      <%# User Info %>
+      <div class="flex-1 min-w-0">
+        <h2 class="text-xl font-semibold text-gray-900">
+          <%= current_user.name || current_user.email %>
+        </h2>
+        <p class="text-sm text-gray-500">
+          <%= current_user.email %>
+          <% if current_user.provider.present? %>
+            • Signed in via <%= current_user.provider.titleize %>
+          <% end %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <%# SSO Applications Grid %>
 <div class="container mx-auto px-4 py-8">
   <div class="flex items-center justify-between mb-8">

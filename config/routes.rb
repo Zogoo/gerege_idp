@@ -10,7 +10,8 @@ Rails.application.routes.draw do
     registrations: "users/registrations",
     confirmations: "users/confirmations",
     passwords: "users/passwords",
-    unlocks: "users/unlocks"
+    unlocks: "users/unlocks",
+    omniauth_callbacks: "users/omniauth_callbacks"
   }
 
   namespace :api do

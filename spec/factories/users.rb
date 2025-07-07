@@ -6,5 +6,12 @@ FactoryBot.define do
     password { 'password123' }
     association :tenant
     # Add other user attributes as needed
+
+    trait :facebook_oauth do
+      provider { 'facebook' }
+      uid { Faker::Number.number(digits: 15).to_s }
+      name { Faker::Name.name }
+      image { Faker::Internet.url(host: 'graph.facebook.com', path: '/picture') }
+    end
   end
 end
