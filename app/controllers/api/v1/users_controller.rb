@@ -25,8 +25,8 @@ class Api::V1::UsersController < Api::V1::BaseController
 
     respond_to do |format|
       if @api_v1_user.save
-        format.html { redirect_to @api_v1_user, notice: "User was successfully created." }
-        format.json { render :show, status: :created, location: @api_v1_user }
+        format.html { redirect_to api_v1_user_path(@api_v1_user), notice: "User was successfully created." }
+        format.json { render :show, status: :created, location: api_v1_user_path(@api_v1_user) }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @api_v1_user.errors, status: :unprocessable_entity }
@@ -38,8 +38,8 @@ class Api::V1::UsersController < Api::V1::BaseController
   def update
     respond_to do |format|
       if @api_v1_user.update(api_v1_user_params)
-        format.html { redirect_to @api_v1_user, notice: "User was successfully updated." }
-        format.json { render :show, status: :ok, location: @api_v1_user }
+        format.html { redirect_to api_v1_user_path(@api_v1_user), notice: "User was successfully updated." }
+        format.json { render :show, status: :ok, location: api_v1_user_path(@api_v1_user) }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @api_v1_user.errors, status: :unprocessable_entity }
@@ -60,11 +60,11 @@ class Api::V1::UsersController < Api::V1::BaseController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_api_v1_user
-      @api_v1_user = User.find(params.expect(:id))
+      @api_v1_user = User.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def api_v1_user_params
-      params.fetch(:api_v1_user, {})
+      params.require(:api_v1_user).permit(:email, :password, :tenant_id)
     end
 end

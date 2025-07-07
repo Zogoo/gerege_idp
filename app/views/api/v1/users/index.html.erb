@@ -8,7 +8,7 @@
   <% @api_v1_users.each do |api_v1_user| %>
     <%= render api_v1_user %>
     <p>
-      <%= link_to "Show this user", api_v1_user %>
+      <%= link_to "Show this user", api_v1_user_path(api_v1_user) %>
     </p>
   <% end %>
 </div>

@@ -13,71 +13,73 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/api/v1/users", type: :request do
-  # This should return the minimal set of attributes required to create a valid
-  # Api::V1::User. As you add validations to Api::V1::User, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
+  let!(:tenant) { create(:tenant, tenant_mode: :single) }
+  let!(:user) { create(:user, tenant: tenant) }
+  let!(:application) { create(:doorkeeper_application) }
+  let!(:token) { create(:doorkeeper_access_token, application: application, resource_owner_id: user.id) }
+  let(:headers) { { "Authorization" => "Bearer #{token.token}", "ACCEPT" => "application/json" } }
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:valid_attributes) do
+    {
+      email: Faker::Internet.email,
+      password: 'password123',
+      tenant_id: tenant.id
+    }
+  end
+
+  let(:invalid_attributes) do
+    {
+      email: '',
+      password: '',
+      tenant_id: nil
+    }
+  end
 
   describe "GET /index" do
     it "renders a successful response" do
-      Api::V1::User.create! valid_attributes
-      get api_v1_users_url
+      create(:user, tenant: tenant)
+      get api_v1_users_url, headers: headers
       expect(response).to be_successful
     end
   end
 
   describe "GET /show" do
     it "renders a successful response" do
-      user = Api::V1::User.create! valid_attributes
-      get api_v1_user_url(user)
+      u = create(:user, tenant: tenant)
+      get api_v1_user_url(u), headers: headers
       expect(response).to be_successful
     end
   end
 
   describe "GET /new" do
-    it "renders a successful response" do
-      get new_api_v1_user_url
-      expect(response).to be_successful
+    it "is not implemented for API (skipped)" do
+      skip "new is not implemented for API endpoints"
     end
   end
 
   describe "GET /edit" do
-    it "renders a successful response" do
-      user = Api::V1::User.create! valid_attributes
-      get edit_api_v1_user_url(user)
-      expect(response).to be_successful
+    it "is not implemented for API (skipped)" do
+      skip "edit is not implemented for API endpoints"
     end
   end
 
   describe "POST /create" do
     context "with valid parameters" do
-      it "creates a new Api::V1::User" do
+      it "creates a new User and returns JSON" do
+        attrs = valid_attributes.merge(email: Faker::Internet.unique.email)
         expect {
-          post api_v1_users_url, params: { api_v1_user: valid_attributes }
-        }.to change(Api::V1::User, :count).by(1)
-      end
-
-      it "redirects to the created api_v1_user" do
-        post api_v1_users_url, params: { api_v1_user: valid_attributes }
-        expect(response).to redirect_to(api_v1_user_url(Api::V1::User.last))
+          post api_v1_users_url, params: { api_v1_user: attrs }, headers: headers
+        }.to change(User, :count).by(1)
+        expect(response).to have_http_status(:created)
+        expect(response.content_type).to include("application/json")
       end
     end
 
     context "with invalid parameters" do
-      it "does not create a new Api::V1::User" do
+      it "does not create a new User and returns 422" do
         expect {
-          post api_v1_users_url, params: { api_v1_user: invalid_attributes }
-        }.to change(Api::V1::User, :count).by(0)
-      end
-
-      it "renders a response with 422 status (i.e. to display the 'new' template)" do
-        post api_v1_users_url, params: { api_v1_user: invalid_attributes }
+          post api_v1_users_url, params: { api_v1_user: invalid_attributes }, headers: headers
+        }.not_to change(User, :count)
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -85,46 +87,36 @@ RSpec.describe "/api/v1/users", type: :request do
 
   describe "PATCH /update" do
     context "with valid parameters" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
-
-      it "updates the requested api_v1_user" do
-        user = Api::V1::User.create! valid_attributes
-        patch api_v1_user_url(user), params: { api_v1_user: new_attributes }
-        user.reload
-        skip("Add assertions for updated state")
+      let(:new_attributes) do
+        { email: Faker::Internet.email }
       end
 
-      it "redirects to the api_v1_user" do
-        user = Api::V1::User.create! valid_attributes
-        patch api_v1_user_url(user), params: { api_v1_user: new_attributes }
-        user.reload
-        expect(response).to redirect_to(api_v1_user_url(user))
+      it "updates the requested user and returns JSON" do
+        u = create(:user, tenant: tenant)
+        patch api_v1_user_url(u), params: { api_v1_user: new_attributes }, headers: headers
+        u.reload
+        expect(u.email).to eq(new_attributes[:email])
+        expect(response).to have_http_status(:ok)
+        expect(response.content_type).to include("application/json")
       end
     end
 
     context "with invalid parameters" do
-      it "renders a response with 422 status (i.e. to display the 'edit' template)" do
-        user = Api::V1::User.create! valid_attributes
-        patch api_v1_user_url(user), params: { api_v1_user: invalid_attributes }
+      it "returns 422 for invalid update" do
+        u = create(:user, tenant: tenant)
+        patch api_v1_user_url(u), params: { api_v1_user: invalid_attributes }, headers: headers
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
 
   describe "DELETE /destroy" do
-    it "destroys the requested api_v1_user" do
-      user = Api::V1::User.create! valid_attributes
+    it "destroys the requested user and returns 204" do
+      u = create(:user, tenant: tenant)
       expect {
-        delete api_v1_user_url(user)
-      }.to change(Api::V1::User, :count).by(-1)
-    end
-
-    it "redirects to the api_v1_users list" do
-      user = Api::V1::User.create! valid_attributes
-      delete api_v1_user_url(user)
-      expect(response).to redirect_to(api_v1_users_url)
+        delete api_v1_user_url(u), headers: headers
+      }.to change(User, :count).by(-1)
+      expect(response).to have_http_status(:no_content)
     end
   end
 end

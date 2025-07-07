@@ -5,6 +5,5 @@
 <div>
   <%= link_to "Edit this user", edit_api_v1_user_path(@api_v1_user) %> |
   <%= link_to "Back to users", api_v1_users_path %>
-
-  <%= button_to "Destroy this user", @api_v1_user, method: :delete %>
+  <%= button_to "Destroy this user", api_v1_user_path(@api_v1_user), method: :delete %>
 </div>
