@@ -115,6 +115,8 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.6.0)
+    dockerfile-rails (1.7.10)
+      rails (>= 3.0.0)
     doorkeeper (5.8.1)
       railties (>= 5)
     doorkeeper-openid_connect (1.8.11)
@@ -306,6 +308,10 @@ GEM
     rake (13.2.1)
     rdoc (6.13.0)
       psych (>= 4.0.0)
+    redis (5.4.0)
+      redis-client (>= 0.22.0)
+    redis-client (0.25.0)
+      connection_pool
     regexp_parser (2.10.0)
     reline (0.6.0)
       io-console (~> 0.5)
@@ -483,6 +489,7 @@ DEPENDENCIES
   database_cleaner-active_record
   debug
   devise
+  dockerfile-rails (>= 1.7)
   doorkeeper
   doorkeeper-openid_connect
   dotenv (~> 3.1)
@@ -494,6 +501,7 @@ DEPENDENCIES
   pg (~> 1.1)
   puma (>= 5.0)
   rails (~> 8.0.2)
+  redis (~> 5.4)
   rolify
   rspec-rails (~> 7.0.0)
   rubocop
