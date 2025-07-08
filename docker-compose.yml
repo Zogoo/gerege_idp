@@ -49,8 +49,8 @@ services:
       DATABASE_URL: postgresql://postgres:postgres@db:5432/gerege_idp_development
       REDIS_URL: redis://redis:6379/0
       DB_HOST: db
-      RAILS_MAX_THREADS: 5
-      WEB_CONCURRENCY: 2
+      RAILS_MAX_THREADS: 1
+      WEB_CONCURRENCY: 0
       PORT: 3000
       HOST: 0.0.0.0
       # Development-specific settings

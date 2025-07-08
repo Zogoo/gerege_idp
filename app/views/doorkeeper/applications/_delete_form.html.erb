@@ -1,0 +1,7 @@
+<%- submit_btn_css ||= 'inline-flex items-center px-2 py-1 text-red-600 hover:text-red-800 rounded transition' %>
+<%= form_tag oauth_application_path(application), method: :delete, data: { turbo_confirm: t('doorkeeper.applications.confirmations.destroy') } do %>
+  <button type="submit" class="<%= submit_btn_css %>" title="<%= t('doorkeeper.applications.buttons.destroy') %>">
+    <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+    <span><%= t('doorkeeper.applications.buttons.destroy') %></span>
+  </button>
+<% end %>
