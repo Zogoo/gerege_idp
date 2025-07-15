@@ -20,6 +20,6 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource, default_path = nil)
-    current_user.present? ? users_my_page_path : root_path
+    stored_location_for(resource) || default_path || users_my_page_path || root_path
   end
 end
