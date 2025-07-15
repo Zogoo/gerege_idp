@@ -32,6 +32,9 @@ Tenant.all.each do |tenant|
   end
 end
 
+User.first.add_role :admin
+
 puts "Seed data created successfully!"
 puts "Created #{Tenant.count} tenants"
 puts "Created #{User.count} users"
+puts "Admin user: #{User.first.email}"
