@@ -7,6 +7,7 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+include FactoryBot::Syntax::Methods
 
 # Clear existing data (optional)
 puts "Cleaning database..."
