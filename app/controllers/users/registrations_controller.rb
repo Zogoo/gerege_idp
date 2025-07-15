@@ -15,6 +15,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     super do |user|
       user.tenant = current_tenant
+      user.add_role :admin if current_tenant.users&.first&.id = user.id
     end
   end
 
