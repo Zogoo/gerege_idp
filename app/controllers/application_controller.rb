@@ -5,8 +5,8 @@ class ApplicationController < ActionController::Base
   def current_tenant
     tenant_config =  Rails.application.config_for(:tenant)
 
-    @current_tenant ||= if tenant_config.single_tenant_mode?
-      Tenant.find_by!(name: tenant_config.dig(:admin_tenant, :name))
+    @current_tenant ||= if tenant_config.tenant_mode == "single"
+      Tenant.find_or_create_by(name: tenant_config.dig(:admin_tenant, :name))
     elsif tenant_config.multi_tenant_mode?
       case tenant_config.tenant_type
       when "subdomain"

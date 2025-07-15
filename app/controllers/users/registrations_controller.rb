@@ -13,7 +13,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    super
+    super do |user|
+      user.tenant = current_tenant
+    end
   end
 
   # GET /resource/edit
