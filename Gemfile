@@ -27,7 +27,9 @@ gem "omniauth-facebook"
 # Doorkeeper for OIDC
 gem "doorkeeper"
 gem "doorkeeper-openid_connect"
+gem 'doorkeeper-jwt'
 gem "bcrypt", "~> 3.1.7"
+gem 'rack-cors'
 
 # RBAC control
 gem "rolify"

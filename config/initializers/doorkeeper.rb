@@ -120,7 +120,7 @@ Doorkeeper.configure do
   # Use a custom class for generating the access token.
   # See https://doorkeeper.gitbook.io/guides/configuration/other-configurations#custom-access-token-generator
   #
-  # access_token_generator '::Doorkeeper::JWT'
+  access_token_generator '::Doorkeeper::JWT'
 
   # The controller +Doorkeeper::ApplicationController+ inherits from.
   # Defaults to +ActionController::Base+ unless +api_only+ is set, which changes the default to
@@ -139,7 +139,7 @@ Doorkeeper.configure do
   #
   # You can not enable this option together with +hash_token_secrets+.
   #
-  # reuse_access_token
+  reuse_access_token
 
   # In case you enabled `reuse_access_token` option Doorkeeper will try to find matching
   # token using `matching_token_for` Access Token API that searches for valid records
@@ -528,4 +528,52 @@ Doorkeeper.configure do
   # WWW-Authenticate Realm (default: "Doorkeeper").
   #
   # realm "Doorkeeper"
+end
+
+# JWT token config
+Doorkeeper::JWT.configure do
+  token_payload do |opts|
+    user = User.find(opts[:resource_owner_id])
+
+    {
+      iss: 'My App',
+      iat: Time.current.utc.to_i,
+      aud: opts[:application][:uid],
+
+      # @see JWT reserved claims - https://tools.ietf.org/html/draft-jones-json-web-token-07#page-7
+      jti: SecureRandom.uuid,
+      sub: user.id,
+
+      user: {
+        id: user.id,
+        email: user.email
+      }
+    }
+  end
+
+  # Optionally set additional headers for the JWT. See
+  # https://tools.ietf.org/html/rfc7515#section-4.1
+  # JWK can be used to automatically verify RS* tokens client-side if token's kid matches a public kid in /oauth/discovery/keys
+  # token_headers do |_opts|
+  #   key = OpenSSL::PKey::RSA.new(File.read(File.join('path', 'to', 'file.pem')))
+  #   { kid: JWT::JWK.new(key)[:kid] }
+  # end
+
+  # Use the application secret specified in the access grant token. Defaults to
+  # `false`. If you specify `use_application_secret true`, both `secret_key` and
+  # `secret_key_path` will be ignored.
+  use_application_secret false
+
+  # Set the signing secret. This would be shared with any other applications
+  # that should be able to verify the authenticity of the token. Defaults to "secret".
+  secret_key Rails.application.credentials.jwt_secret || 'test_secret_key_for_jwt'
+
+  # If you want to use RS* algorithms specify the path to the RSA key to use for
+  # signing. If you specify a `secret_key_path` it will be used instead of
+  # `secret_key`.
+  # secret_key_path File.join('path', 'to', 'file.pem')
+
+  # Specify cryptographic signing algorithm type (https://github.com/progrium/ruby-jwt). Defaults to
+  # `nil`.
+  signing_method :hs512
 end

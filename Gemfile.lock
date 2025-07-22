@@ -119,6 +119,8 @@ GEM
       rails (>= 3.0.0)
     doorkeeper (5.8.1)
       railties (>= 5)
+    doorkeeper-jwt (0.4.2)
+      jwt (>= 2.1)
     doorkeeper-openid_connect (1.8.11)
       doorkeeper (>= 5.5, < 5.9)
       jwt (>= 2.5)
@@ -262,6 +264,9 @@ GEM
     raabro (1.4.0)
     racc (1.8.1)
     rack (3.1.12)
+    rack-cors (3.0.0)
+      logger
+      rack (>= 3.0.14)
     rack-protection (4.1.1)
       base64 (>= 0.1.0)
       logger (>= 1.6.0)
@@ -491,6 +496,7 @@ DEPENDENCIES
   devise
   dockerfile-rails (>= 1.7)
   doorkeeper
+  doorkeeper-jwt
   doorkeeper-openid_connect
   dotenv (~> 3.1)
   factory_bot_rails
@@ -500,6 +506,7 @@ DEPENDENCIES
   omniauth-facebook
   pg (~> 1.1)
   puma (>= 5.0)
+  rack-cors
   rails (~> 8.0.2)
   redis (~> 5.4)
   rolify
