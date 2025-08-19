@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,22 +11,47 @@
   <%= vite_javascript_tag 'application' %>
 </head>
 <body class="bg-gray-50 min-h-screen">
+  <!-- Navigation -->
   <nav class="bg-white border-b border-gray-200 shadow-sm">
-    <div class="container mx-auto px-4 py-3 flex items-center gap-6">
-      <%= link_to t('doorkeeper.layouts.admin.title', default: 'OAuth2 Provider'), oauth_applications_path, class: 'font-bold text-lg text-gray-900 hover:text-indigo-600' %>
-      <%= link_to t('doorkeeper.layouts.admin.nav.applications', default: 'Applications'), oauth_applications_path, class: 'text-gray-700 hover:text-indigo-600' %>
-      <% if respond_to?(:root_path) %>
-        <%= link_to t('doorkeeper.layouts.admin.nav.home', default: 'Home'), root_path, class: 'text-gray-700 hover:text-indigo-600' %>
-      <% end %>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center">
+          <%= link_to t('doorkeeper.layouts.admin.title', default: 'OAuth2 Provider'), 
+              oauth_applications_path, 
+              class: 'font-bold text-lg text-gray-900 hover:text-indigo-600 transition-colors duration-200' %>
+        </div>
+        <div class="flex items-center space-x-4">
+          <%= link_to t('doorkeeper.layouts.admin.nav.applications', default: 'Applications'), 
+              oauth_applications_path, 
+              class: 'text-gray-700 hover:text-indigo-600 transition-colors duration-200' %>
+          <% if respond_to?(:root_path) %>
+            <%= link_to t('doorkeeper.layouts.admin.nav.home', default: 'Home'), 
+                root_path, 
+                class: 'text-gray-700 hover:text-indigo-600 transition-colors duration-200' %>
+          <% end %>
+        </div>
+      </div>
     </div>
   </nav>
-  <div class="container mx-auto px-4 py-8">
-    <% if flash[:notice].present? %>
-      <div class="mb-6 p-4 rounded bg-blue-100 text-blue-800">
-        <%= flash[:notice] %>
-      </div>
-    <% end %>
-    <%= yield %>
-  </div>
+
+  <!-- Main Content -->
+  <main class="flex-1">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <% if flash[:notice].present? %>
+        <div class="mb-6 p-4 rounded-lg bg-blue-100 border border-blue-200 text-blue-800">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
+      
+      <% if flash[:alert].present? %>
+        <div class="mb-6 p-4 rounded-lg bg-red-100 border border-red-200 text-red-800">
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
+
+      <!-- Yield the main content -->
+      <%= yield %>
+    </div>
+  </main>
 </body>
 </html>

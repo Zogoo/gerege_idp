@@ -1,57 +1,68 @@
 <%= form_for application, url: doorkeeper_submit_path(application), as: :doorkeeper_application, html: { role: 'form', class: 'space-y-8' } do |f| %>
   <% if application.errors.any? %>
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" data-alert>
-      <p class="font-semibold mb-2"><%= t('doorkeeper.applications.form.error') %></p>
-      <ul class="list-disc list-inside text-sm">
-        <% application.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
+    <div class="bg-red-50 border border-red-200 text-red-800 px-6 py-4 rounded-lg" data-alert>
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <svg class="h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+          </svg>
+        </div>
+        <div class="ml-3">
+          <h3 class="text-sm font-semibold text-red-800 mb-2"><%= t('doorkeeper.applications.form.error') %></h3>
+          <ul class="list-disc list-inside text-sm space-y-1">
+            <% application.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
     </div>
   <% end %>
 
   <div>
-    <%= f.label :name, class: 'block text-sm font-medium text-gray-700 mb-1' %>
-    <%= f.text_field :name, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 #{'border-red-500' if application.errors[:name].present?}", required: true, placeholder: 'My App Name' %>
+    <%= f.label :name, class: 'block text-sm font-semibold text-gray-900 mb-2' %>
+    <%= f.text_field :name, class: "block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-colors duration-200 #{'border-red-500 focus:border-red-500 focus:ring-red-200' if application.errors[:name].present?}", required: true, placeholder: 'My App Name' %>
     <%= doorkeeper_errors_for application, :name %>
   </div>
 
   <div>
-    <%= f.label :redirect_uri, class: 'block text-sm font-medium text-gray-700 mb-1' %>
-    <%= f.text_area :redirect_uri, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 #{'border-red-500' if application.errors[:redirect_uri].present?}", placeholder: 'https://example.com/callback' %>
+    <%= f.label :redirect_uri, class: 'block text-sm font-semibold text-gray-900 mb-2' %>
+    <%= f.text_area :redirect_uri, rows: 3, class: "block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-colors duration-200 #{'border-red-500 focus:border-red-500 focus:ring-red-200' if application.errors[:redirect_uri].present?}", placeholder: 'https://example.com/callback' %>
     <%= doorkeeper_errors_for application, :redirect_uri %>
-    <span class="text-xs text-gray-500 block mt-1">
-      <%= t('doorkeeper.applications.help.redirect_uri') %>
-    </span>
-    <% if Doorkeeper.configuration.allow_blank_redirect_uri?(application) %>
-      <span class="text-xs text-gray-500 block mt-1">
-        <%= t('doorkeeper.applications.help.blank_redirect_uri') %>
-      </span>
-    <% end %>
+    <div class="mt-2 space-y-1">
+      <p class="text-sm text-gray-600">
+        <%= t('doorkeeper.applications.help.redirect_uri') %>
+      </p>
+      <% if Doorkeeper.configuration.allow_blank_redirect_uri?(application) %>
+        <p class="text-sm text-gray-600">
+          <%= t('doorkeeper.applications.help.blank_redirect_uri') %>
+        </p>
+      <% end %>
+    </div>
   </div>
 
   <div>
     <div class="flex items-center">
-      <%= f.check_box :confidential, class: "h-4 w-4 text-indigo-600 border-gray-300 rounded #{'border-red-500' if application.errors[:confidential].present?}" %>
-      <%= f.label :confidential, class: 'ml-2 block text-sm font-medium text-gray-700' %>
+      <%= f.check_box :confidential, class: "h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 #{'border-red-500' if application.errors[:confidential].present?}" %>
+      <%= f.label :confidential, class: 'ml-3 block text-sm font-semibold text-gray-900' %>
     </div>
     <%= doorkeeper_errors_for application, :confidential %>
-    <span class="text-xs text-gray-500 block mt-1">
+    <p class="text-sm text-gray-600 mt-2">
       <%= t('doorkeeper.applications.help.confidential') %>
-    </span>
+    </p>
   </div>
 
   <div>
-    <%= f.label :scopes, class: 'block text-sm font-medium text-gray-700 mb-1' %>
-    <%= f.text_field :scopes, class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 #{'border-red-500' if application.errors[:scopes].present?}", placeholder: 'read write' %>
+    <%= f.label :scopes, class: 'block text-sm font-semibold text-gray-900 mb-2' %>
+    <%= f.text_field :scopes, class: "block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition-colors duration-200 #{'border-red-500 focus:border-red-500 focus:ring-red-200' if application.errors[:scopes].present?}", placeholder: 'read write' %>
     <%= doorkeeper_errors_for application, :scopes %>
-    <span class="text-xs text-gray-500 block mt-1">
+    <p class="text-sm text-gray-600 mt-2">
       <%= t('doorkeeper.applications.help.scopes') %>
-    </span>
+    </p>
   </div>
 
-  <div class="flex items-center space-x-4">
-    <%= f.submit t('doorkeeper.applications.buttons.submit'), class: 'inline-flex items-center px-5 py-2.5 bg-indigo-600 border border-transparent rounded-md font-semibold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow transition' %>
-    <%= link_to t('doorkeeper.applications.buttons.cancel'), oauth_applications_path, class: 'inline-flex items-center px-5 py-2.5 bg-gray-200 border border-transparent rounded-md font-semibold text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 shadow transition' %>
+  <div class="flex items-center space-x-4 pt-4">
+    <%= f.submit t('doorkeeper.applications.buttons.submit'), class: 'inline-flex items-center px-6 py-3 bg-indigo-600 border border-transparent rounded-lg font-semibold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-lg transition-all duration-200 transform hover:scale-105' %>
+    <%= link_to t('doorkeeper.applications.buttons.cancel'), oauth_applications_path, class: 'inline-flex items-center px-6 py-3 bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 shadow transition-all duration-200' %>
   </div>
 <% end %>

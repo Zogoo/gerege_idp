@@ -1,4 +1,4 @@
-<%- submit_btn_css ||= 'btn btn-link' %>
-<%= form_tag oauth_authorized_application_path(application), method: :delete do %>
-  <%= submit_tag t('doorkeeper.authorized_applications.buttons.revoke'), onclick: "return confirm('#{ t('doorkeeper.authorized_applications.confirmations.revoke') }')", class: submit_btn_css %>
+<%- submit_btn_css ||= 'inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-lg font-semibold text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 shadow transition-all duration-200 transform hover:scale-105' %>
+<%= form_tag oauth_authorized_application_path(application), method: :delete, data: { turbo_confirm: t('doorkeeper.authorized_applications.confirmations.revoke') } do %>
+  <%= submit_tag t('doorkeeper.authorized_applications.buttons.revoke'), class: submit_btn_css %>
 <% end %>

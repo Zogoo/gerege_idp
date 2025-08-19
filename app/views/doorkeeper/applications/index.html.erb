@@ -1,57 +1,144 @@
-<div class="max-w-5xl mx-auto">
-  <div class="flex items-center justify-between border-b border-gray-200 mb-8 pb-4">
-    <div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <!-- Header -->
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-gray-200 mb-8 pb-6">
+    <div class="mb-4 sm:mb-0">
       <h1 class="text-3xl font-bold text-gray-900"><%= t('.title') %></h1>
-      <p class="text-gray-500 mt-1 text-base">Manage your OAuth applications. Create, edit, or remove applications as needed.</p>
+      <p class="text-gray-600 mt-2 text-base">Manage your OAuth applications. Create, edit, or remove applications as needed.</p>
     </div>
-    <%= link_to new_oauth_application_path, class: 'inline-flex items-center px-5 py-2.5 bg-indigo-600 border border-transparent rounded-md font-semibold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow transition' do %>
+    <%= link_to new_oauth_application_path, class: 'inline-flex items-center px-6 py-3 bg-indigo-600 border border-transparent rounded-lg font-semibold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-lg transition-all duration-200 transform hover:scale-105' do %>
       <svg class="w-5 h-5 mr-2 -ml-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
       <span><%= t('.new') %></span>
     <% end %>
   </div>
 
   <% if @applications.empty? %>
-    <div class="bg-white shadow rounded-lg p-8 flex flex-col items-center justify-center text-center">
-      <svg class="w-12 h-12 text-gray-300 mb-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2a4 4 0 018 0v2m-4-4a4 4 0 100-8 4 4 0 000 8z"/></svg>
-      <h2 class="text-xl font-semibold text-gray-700 mb-2">No applications found</h2>
-      <p class="text-gray-500 mb-4">Get started by creating your first OAuth application.</p>
-      <%= link_to t('.new'), new_oauth_application_path, class: 'inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow transition' %>
+    <div class="bg-white shadow-xl rounded-2xl p-12 flex flex-col items-center justify-center text-center border border-gray-100">
+      <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mb-6">
+        <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2a4 4 0 018 0v2m-4-4a4 4 0 100-8 4 4 0 000 8z"/></svg>
+      </div>
+      <h2 class="text-2xl font-bold text-gray-900 mb-3">No applications found</h2>
+      <p class="text-gray-600 mb-8 text-lg">Get started by creating your first OAuth application.</p>
+      <%= link_to t('.new'), new_oauth_application_path, class: 'inline-flex items-center px-6 py-3 bg-indigo-600 border border-transparent rounded-lg font-semibold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-lg transition-all duration-200 transform hover:scale-105' %>
     </div>
   <% else %>
-    <div class="overflow-x-auto mt-6">
-      <table class="min-w-full divide-y divide-gray-200 bg-white shadow rounded-lg">
-        <thead class="bg-gray-50">
-          <tr>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t('.name') %></th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t('.callback_url') %></th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t('.confidential') %></th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><%= t('.actions') %></th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-100">
-          <% @applications.each_with_index do |application, idx| %>
-            <tr id="application_<%= application.id %>" class="hover:bg-gray-50 <%= idx.even? ? 'bg-white' : 'bg-gray-50' %>">
-              <td class="px-6 py-4 whitespace-nowrap align-middle font-medium text-gray-900">
-                <%= link_to application.name, oauth_application_path(application), class: 'hover:underline' %>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap align-middle text-gray-700">
-                <%= simple_format(application.redirect_uri) %>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap align-middle">
-                <span class="inline-flex items-center px-2 py-1 rounded text-xs font-semibold <%= application.confidential? ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' %>">
-                  <%= application.confidential? ? t('doorkeeper.applications.index.confidentiality.yes') : t('doorkeeper.applications.index.confidentiality.no') %>
-                </span>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap align-middle flex gap-2">
-                <%= link_to edit_oauth_application_path(application), class: 'inline-flex items-center px-2 py-1 text-blue-600 hover:text-blue-800 rounded transition', title: t('doorkeeper.applications.buttons.edit') do %>
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536M9 11l6 6M3 21h6l11-11a2.828 2.828 0 00-4-4L5 17v4z"/></svg>
-                <% end %>
-                <%= render 'delete_form', { application: application, submit_btn_css: 'inline-flex items-center px-2 py-1 text-red-600 hover:text-red-800 rounded transition' } %>
-              </td>
+    <!-- Desktop Table View -->
+    <div class="hidden lg:block overflow-hidden bg-white shadow-xl rounded-2xl border border-gray-100">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200" role="table">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-8 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider" scope="col"><%= t('.name') %></th>
+              <th class="px-8 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider" scope="col"><%= t('.callback_url') %></th>
+              <th class="px-8 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider" scope="col"><%= t('.confidential') %></th>
+              <th class="px-8 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider" scope="col"><%= t('.actions') %></th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-100">
+            <% @applications.each_with_index do |application, idx| %>
+              <tr id="application_<%= application.id %>" class="hover:bg-gray-50 transition-colors duration-200">
+                <td class="px-8 py-6 whitespace-nowrap align-middle">
+                  <div class="flex items-center">
+                    <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                      <span class="text-white font-bold text-sm">
+                        <%= application.name.first.upcase %>
+                      </span>
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <%= link_to application.name, oauth_application_path(application), class: 'font-semibold text-gray-900 hover:text-indigo-600 transition-colors duration-200 truncate block' %>
+                      <p class="text-sm text-gray-500 mt-1">Created <%= time_ago_in_words(application.created_at) %> ago</p>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-8 py-6 align-middle">
+                  <div class="max-w-md">
+                    <% if application.redirect_uri.present? %>
+                      <% application.redirect_uri.split.each do |uri| %>
+                        <div class="mb-2 last:mb-0">
+                          <code class="text-sm bg-gray-100 px-2 py-1 rounded font-mono text-gray-800 break-all">
+                            <%= uri %>
+                          </code>
+                        </div>
+                      <% end %>
+                    <% else %>
+                      <span class="text-sm text-gray-500 italic">No redirect URI</span>
+                    <% end %>
+                  </div>
+                </td>
+                <td class="px-8 py-6 whitespace-nowrap align-middle">
+                  <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold <%= application.confidential? ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' %>">
+                    <%= application.confidential? ? t('doorkeeper.applications.index.confidentiality.yes') : t('doorkeeper.applications.index.confidentiality.no') %>
+                  </span>
+                </td>
+                <td class="px-8 py-6 whitespace-nowrap align-middle">
+                  <div class="flex items-center space-x-3">
+                    <%= link_to edit_oauth_application_path(application), class: 'inline-flex items-center p-2 text-indigo-600 hover:text-indigo-800 hover:bg-indigo-50 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500', title: t('doorkeeper.applications.buttons.edit') do %>
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536M9 11l6 6M3 21h6l11-11a2.828 2.828 0 00-4-4L5 17v4z"/></svg>
+                    <% end %>
+                    <%= render 'delete_form', { application: application, submit_btn_css: 'inline-flex items-center p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500' } %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Mobile Card View -->
+    <div class="lg:hidden space-y-4">
+      <% @applications.each do |application| %>
+        <div id="application_<%= application.id %>" class="bg-white shadow-xl rounded-2xl p-6 border border-gray-100">
+          <!-- App Header -->
+          <div class="flex items-start justify-between mb-4">
+            <div class="flex items-center flex-1 min-w-0">
+              <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                <span class="text-white font-bold text-sm">
+                  <%= application.name.first.upcase %>
+                </span>
+              </div>
+              <div class="min-w-0 flex-1">
+                <%= link_to application.name, oauth_application_path(application), class: 'font-semibold text-gray-900 hover:text-indigo-600 transition-colors duration-200 text-lg block truncate' %>
+                <p class="text-sm text-gray-500 mt-1">Created <%= time_ago_in_words(application.created_at) %> ago</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-2 ml-4">
+              <%= link_to edit_oauth_application_path(application), class: 'inline-flex items-center p-2 text-indigo-600 hover:text-indigo-800 hover:bg-indigo-50 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500', title: t('doorkeeper.applications.buttons.edit') do %>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536M9 11l6 6M3 21h6l11-11a2.828 2.828 0 00-4-4L5 17v4z"/></svg>
+              <% end %>
+              <%= render 'delete_form', { application: application, submit_btn_css: 'inline-flex items-center p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500' } %>
+            </div>
+          </div>
+
+          <!-- App Details -->
+          <div class="space-y-3">
+            <!-- Confidential Status -->
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-medium text-gray-700">Confidential:</span>
+              <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold <%= application.confidential? ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' %>">
+                <%= application.confidential? ? t('doorkeeper.applications.index.confidentiality.yes') : t('doorkeeper.applications.index.confidentiality.no') %>
+              </span>
+            </div>
+
+            <!-- Callback URLs -->
+            <div>
+              <span class="text-sm font-medium text-gray-700 block mb-2">Callback URLs:</span>
+              <% if application.redirect_uri.present? %>
+                <div class="space-y-2">
+                  <% application.redirect_uri.split.each do |uri| %>
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-3">
+                      <code class="text-sm font-mono text-gray-800 break-all">
+                        <%= uri %>
+                      </code>
+                    </div>
+                  <% end %>
+                </div>
+              <% else %>
+                <span class="text-sm text-gray-500 italic">No redirect URI</span>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
     </div>
   <% end %>
 </div>

@@ -1,7 +1,63 @@
-<header class="page-header">
-  <h1><%= t('.title') %>:</h1>
-</header>
+<div class="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50 flex items-center justify-center p-4">
+  <div class="w-full max-w-md">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
+        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+      </div>
+      <h1 class="text-2xl font-bold text-gray-900 mb-2">
+        <%= t('.title') %>
+      </h1>
+      <p class="text-gray-600">
+        Your authorization code has been generated
+      </p>
+    </div>
 
-<main role="main">
-  <code id="authorization_code"><%= params[:code] %></code>
-</main>
+    <!-- Authorization Code Card -->
+    <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+      <div class="p-6">
+        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+          <div class="flex items-center justify-between">
+            <div class="flex-1">
+              <h3 class="text-sm font-medium text-gray-900 mb-2">Authorization Code</h3>
+              <code id="authorization_code" class="text-sm bg-white px-3 py-2 rounded border font-mono text-gray-800 break-all">
+                <%= params[:code] %>
+              </code>
+            </div>
+            <button onclick="copyToClipboard()" class="ml-4 p-2 text-gray-500 hover:text-gray-700 transition-colors duration-200">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center mt-6">
+      <p class="text-xs text-gray-500">
+        This code can be used to exchange for an access token.
+        <br>
+        Keep it secure and do not share it with others.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function copyToClipboard() {
+    const code = document.getElementById('authorization_code').textContent;
+    navigator.clipboard.writeText(code).then(function() {
+      // Show a brief success message
+      const button = event.target.closest('button');
+      const originalHTML = button.innerHTML;
+      button.innerHTML = '<svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>';
+      setTimeout(() => {
+        button.innerHTML = originalHTML;
+      }, 2000);
+    });
+  }
+</script>

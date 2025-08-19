@@ -1,24 +1,57 @@
-<header class="page-header">
-  <h1><%= t('doorkeeper.authorized_applications.index.title') %></h1>
-</header>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <!-- Header -->
+  <div class="flex items-center justify-between border-b border-gray-200 mb-8 pb-6">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-900"><%= t('doorkeeper.authorized_applications.index.title') %></h1>
+      <p class="text-gray-600 mt-2 text-base">Manage applications that have access to your account.</p>
+    </div>
+  </div>
 
-<main role="main">
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th><%= t('doorkeeper.authorized_applications.index.application') %></th>
-      <th><%= t('doorkeeper.authorized_applications.index.created_at') %></th>
-      <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <% @applications.each do |application| %>
-      <tr>
-        <td><%= application.name %></td>
-        <td><%= application.created_at.strftime(t('doorkeeper.authorized_applications.index.date_format')) %></td>
-        <td><%= render 'delete_form', application: application %></td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
-</main>
+  <% if @applications.empty? %>
+    <div class="bg-white shadow-xl rounded-2xl p-12 flex flex-col items-center justify-center text-center border border-gray-100">
+      <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mb-6">
+        <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </div>
+      <h2 class="text-2xl font-bold text-gray-900 mb-3">No authorized applications</h2>
+      <p class="text-gray-600 mb-8 text-lg">You haven't authorized any applications to access your account yet.</p>
+    </div>
+  <% else %>
+    <div class="overflow-hidden bg-white shadow-xl rounded-2xl border border-gray-100">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-8 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"><%= t('doorkeeper.authorized_applications.index.application') %></th>
+              <th class="px-8 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"><%= t('doorkeeper.authorized_applications.index.created_at') %></th>
+              <th class="px-8 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-100">
+            <% @applications.each do |application| %>
+              <tr class="hover:bg-gray-50 transition-colors duration-200">
+                <td class="px-8 py-6 whitespace-nowrap align-middle">
+                  <div class="flex items-center">
+                    <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center mr-4">
+                      <span class="text-white font-bold text-sm">
+                        <%= application.name.first.upcase %>
+                      </span>
+                    </div>
+                    <div>
+                      <div class="font-semibold text-gray-900"><%= application.name %></div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-8 py-6 whitespace-nowrap align-middle text-gray-700">
+                  <%= application.created_at.strftime(t('doorkeeper.authorized_applications.index.date_format')) %>
+                </td>
+                <td class="px-8 py-6 whitespace-nowrap align-middle">
+                  <%= render 'delete_form', application: application %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% end %>
+</div>

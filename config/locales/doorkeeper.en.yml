@@ -19,6 +19,20 @@ en:
               not_match_configured: "doesn't match configured on the server."
 
   doorkeeper:
+    scopes:
+      read: 'Read your basic information'
+      write: 'Write to your account'
+      profile: 'Access your profile information'
+      email: 'Access your email address'
+      openid: 'Verify your identity'
+      offline_access: 'Access your data when you are not present'
+      admin: 'Administrative access'
+      public: 'Public read access'
+      private: 'Private read access'
+      write_profile: 'Update your profile information'
+      delete: 'Delete your data'
+      full_access: 'Full access to your account'
+
     applications:
       confirmations:
         destroy: 'Are you sure?'
