@@ -35,5 +35,6 @@ Rails.application.routes.draw do
   namespace :users do
     get "my_page", to: "my_page#show"
     get "my_page/settings", to: "my_page#settings"
+    get "verify_session", to: "sessions_confirmation#show"
   end
 end
