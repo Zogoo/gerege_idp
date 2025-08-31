@@ -32,9 +32,17 @@ Rails.application.routes.draw do
 
   mount SamlIdpRails::Engine, at: "/saml_idp" # if you want to use the SAML IdP
 
+  # WebAuthn routes
   namespace :users do
     get "my_page", to: "my_page#show"
     get "my_page/settings", to: "my_page#settings"
     get "verify_session", to: "sessions_confirmation#show"
+    
+    # Passkey management
+    resources :passkey_management, only: [:index, :new, :create, :destroy]
+    
+    # Passkey login (handled in sessions controller)
+    post "passkey_login", to: "passkey_login#create"
+    post "passkey_login/authenticate", to: "passkey_login#authenticate"
   end
 end

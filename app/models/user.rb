@@ -18,6 +18,8 @@ class User < ApplicationRecord
            foreign_key: :resource_owner_id,
            dependent: :delete_all # or :destroy if you need callbacks
 
+  has_many :webauthn_credentials, dependent: :destroy
+
   validates :email, presence: true, uniqueness: true
   validates :password, presence: true, on: :create
   validates :tenant_id, presence: true
@@ -57,5 +59,9 @@ class User < ApplicationRecord
     end
     
     user
+  end
+
+  def has_webauthn_credentials?
+    webauthn_credentials.any?
   end
 end

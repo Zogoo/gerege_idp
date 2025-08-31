@@ -9,3 +9,9 @@ application.register("menu", MenuController)
 
 import SettingsController from "./settings_controller"
 application.register("settings", SettingsController)
+
+import PasskeyRegistrationController from "./passkey_registration_controller"
+application.register("passkey-registration", PasskeyRegistrationController)
+
+import PasskeyLoginController from "./passkey_login_controller"
+application.register("passkey-login", PasskeyLoginController)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_07_223434) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_31_213151) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -102,10 +102,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_07_223434) do
     t.string "name"
     t.string "address"
     t.string "web"
-    t.string "tenant_mode"
-    t.string "tenant_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "tenant_mode"
+    t.string "tenant_type"
   end
 
   create_table "users", force: :cascade do |t|
@@ -136,10 +136,23 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_07_223434) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
+  create_table "webauthn_credentials", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "external_id", null: false
+    t.text "public_key", null: false
+    t.string "nickname"
+    t.integer "sign_count", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["external_id"], name: "index_webauthn_credentials_on_external_id", unique: true
+    t.index ["user_id"], name: "index_webauthn_credentials_on_user_id"
+  end
+
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_grants", "users", column: "resource_owner_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "users", column: "resource_owner_id"
   add_foreign_key "oauth_openid_requests", "oauth_access_grants", column: "access_grant_id", on_delete: :cascade
   add_foreign_key "users", "tenants"
+  add_foreign_key "webauthn_credentials", "users"
 end

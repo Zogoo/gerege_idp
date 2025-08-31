@@ -137,9 +137,8 @@
               <p>Manage your passkeys for passwordless authentication.</p>
             </div>
             <div class="mt-5">
-              <button type="button" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                Add passkey
-              </button>
+              <%= link_to "Manage passkeys", users_passkey_management_index_path, 
+                          class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
             </div>
           </div>
         </div>

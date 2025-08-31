@@ -35,6 +35,32 @@ GeregeIdP is a Ruby on Rails template with modern stack to start your new projec
 - **Github Actions**: Uses Github Actions for continuous integration and deployment.
 - **Deployment**: Supports deployment on [Heroku](https://www.heroku.com/platform) and [Render](https://render.com)
 
+## WebAuthn/Passkey Authentication
+
+This application includes full WebAuthn support for passwordless authentication using passkeys. Users can:
+
+### For Users:
+1. **Add Passkeys**: Go to Settings → Authentication → Manage passkeys
+2. **Login with Passkeys**: Use fingerprint, face ID, or other biometric authentication
+3. **Multiple Devices**: Register passkeys on multiple devices (iPhone, MacBook, Windows PC, etc.)
+
+### Features:
+- **Biometric Authentication**: Fingerprint, face ID, or PIN
+- **Cross-platform**: Works on iOS, macOS, Windows, Android
+- **Secure**: Uses public-key cryptography
+- **User-friendly**: No passwords to remember or type
+
+### Technical Implementation:
+- **Backend**: Uses the `webauthn` gem for server-side verification
+- **Frontend**: Stimulus controllers handle WebAuthn API calls
+- **Database**: Stores encrypted public keys and metadata
+- **Security**: Implements proper challenge-response verification
+
+### Routes:
+- `/users/passkey_login` - Passkey login page
+- `/users/passkey_management` - Manage user's passkeys
+- `/users/passkey_login/authenticate` - Authentication endpoint
+
 ## Getting Started
 
 ### System Requirements
