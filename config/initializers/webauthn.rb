@@ -6,7 +6,8 @@ WebAuthn.configure do |config|
     "http://localhost:3000",
     "https://localhost:3000",
     "http://127.0.0.1:3000",
-    "https://127.0.0.1:3000"
+    "https://127.0.0.1:3000",
+    "https://gerege-idp.fly.dev"
   ]
 
   # Relying Party name for display purposes
@@ -26,7 +27,14 @@ WebAuthn.configure do |config|
   # In this case the default would be "localhost", but you can set it to
   # the suffix "localhost"
   #
-  config.rp_id = "localhost"
+  # Dynamically set rp_id for local and staging
+  config.rp_id = ENV["WEBAUTHN_RP_ID"] || (
+    if Rails.env.production? || Rails.env.staging?
+      "gerege-idp.fly.dev"
+    else
+      "localhost"
+    end
+  )
 
   # Configure preferred binary-to-text encoding scheme. This should match the encoding scheme
   # used in your client-side (user agent) code before sending the credential to the server.
