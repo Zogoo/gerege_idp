@@ -104,9 +104,7 @@ export default class extends Controller {
       if (authenticateResponse.ok) {
         this.showSuccess('Authentication successful! Redirecting...')
         // Redirect to the specified URL
-        setTimeout(() => {
-          window.location.href = authResult.redirect_url
-        }, 1000)
+        window.location.replace(authResult.redirect_url);
       } else {
         throw new Error(authResult.error || 'Authentication failed')
       }
