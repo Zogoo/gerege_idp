@@ -31,9 +31,16 @@ ENV RAILS_ENV="development" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT=""
 
+# Create a non-root user for development
+RUN groupadd --system --gid 1000 rails && \
+    useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash
+
 # Install application gems
 COPY Gemfile Gemfile.lock ./
-RUN bundle install
+RUN mkdir -p /usr/local/bundle && \
+    chown -R rails:rails /usr/local/bundle && \
+    bundle config set --local path /usr/local/bundle && \
+    bundle install --no-cache
 
 # Install node modules
 COPY package.json package-lock.json ./
@@ -41,11 +48,7 @@ RUN npm ci
 
 # Copy application code
 COPY . .
-
-# Create a non-root user for development
-RUN groupadd --system --gid 1000 rails && \
-    useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
-    chown -R rails:rails /rails
+RUN chown -R rails:rails /rails
 USER 1000:1000
 
 # Expose port
