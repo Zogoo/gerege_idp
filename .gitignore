@@ -51,6 +51,9 @@ yarn-debug.log*
 /vendor/bundle
 /vendor/ruby
 
+# Overmind socket file
+/.overmind.sock
+
 # Vite Ruby
 /public/vite*
 node_modules

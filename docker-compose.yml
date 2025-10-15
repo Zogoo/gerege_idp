@@ -34,6 +34,39 @@ services:
       timeout: 5s
       retries: 5
 
+  # Database Migration Service (runs once)
+  migrate:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: gerege_idp_migrate
+    environment:
+      RAILS_ENV: development
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY:-80de8d296fe847687b30f2560e2c0aa8}
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/gerege_idp_development
+      REDIS_URL: redis://redis:6379/0
+      DB_HOST: db
+      RAILS_LOG_TO_STDOUT: true
+      RAILS_LOG_LEVEL: debug
+    volumes:
+      - .:/rails
+    depends_on:
+      db:
+        condition: service_healthy
+    command: >
+      sh -c "
+      echo 'Starting database migrations...' &&
+      ./bin/rails db:migrate:primary &&
+      echo 'Installing and migrating cache...' &&
+      ./bin/rails solid_cache:install && ./bin/rails db:migrate:cache &&
+      echo 'Installing and migrating queue...' &&
+      ./bin/rails solid_queue:install && ./bin/rails db:migrate:queue &&
+      echo 'Installing and migrating cable...' &&
+      ./bin/rails solid_cable:install && ./bin/rails db:migrate:cable &&
+      echo 'All migrations completed successfully!'
+      "
+    restart: "no"
+
   # Rails Application
   web:
     build:
@@ -57,14 +90,17 @@ services:
       RAILS_LOG_LEVEL: debug
     ports:
       - "3000:3000"
+      - "3036:3036"
     volumes:
       - .:/rails
     depends_on:
+      migrate:
+        condition: service_completed_successfully
       db:
         condition: service_healthy
       redis:
         condition: service_healthy
-    command: ["./bin/rails", "server", "-b", "0.0.0.0", "-p", "3000"]
+    command: ["sh", "-c", "rm -f ./.overmind.sock && ./bin/dev"]
     stdin_open: true
     tty: true
 
@@ -87,6 +123,8 @@ services:
     volumes:
       - .:/rails
     depends_on:
+      migrate:
+        condition: service_completed_successfully
       db:
         condition: service_healthy
       redis:
